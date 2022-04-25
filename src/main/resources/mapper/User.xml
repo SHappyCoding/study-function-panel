@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smz.study.function.panel.dao.UserDao">
+    <resultMap id="UserEntity" type="com.smz.study.function.panel.dao.entity.UserEntity">
+        <result column="Id" property="id" />
+        <result column="Username" property="username" />
+        <result column="Passwd" property="passwd" />
+        <result column="AddTime" property="addTime" />
+        <result column="UpdateTime" property="updateTime" />
+    </resultMap>
+
+    <sql id="sql_select">
+        select id,Username,Passwd,AddTime,UpdateTime
+        from `User`
+    </sql>
+
+    <select id="login" parameterType="java.lang.Integer">
+        select count(1) from `User`
+        where Username = #{username}
+        and Passwd = #{passwd}
+    </select>
+
+    <select id="queryAllUser" resultMap="UserEntity">
+        <include refid="sql_select" />
+        order by id asc
+    </select>
+
+</mapper>
